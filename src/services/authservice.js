@@ -1,22 +1,32 @@
 import config from '../config';
-import {
-  getToken,
-  setToken,
-  validateToken,
-} from '../helpers/authenticationhelper';
+import { setToken } from '../helpers/authenticationhelper';
 
 const getDefaultHeaders = () => ({
   Accept: 'application/json',
   'Content-Type': 'application/json',
-  Authorization: `Bearer ${getToken()}`,
 });
 
-const authorize = async (path, data, headers = {}) => {
-  if (!validateToken()) {
-    window.location.replace(loginRenewal());
-  }
-  const defaultHeaders = getDefaultHeaders(token);
-  return fetch(`${config.authority}`, {
+const authorize = async (data, headers = {}) => {
+  // if (!validateToken()) {
+  //   window.location.replace(loginRenewal());
+  // }
+  const defaultHeaders = getDefaultHeaders();
+  return fetch(`${config.authority}/login`, {
+    method: 'POST',
+    headers: {
+      ...defaultHeaders,
+      ...headers,
+    },
+    body: data,
+  })
+    .then(response => response.json())
+    .then(res => setToken(res))
+    .catch(e => console.log(e));
+};
+
+const register = async (data, headers = {}) => {
+  const defaultHeaders = getDefaultHeaders();
+  return fetch(`${config.authority}/register`, {
     method: 'POST',
     headers: {
       ...defaultHeaders,
@@ -34,4 +44,4 @@ const authorize = async (path, data, headers = {}) => {
 //     ? `?client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&scope=${params.scope}&response_type=token&show_dialog=${params.show_dialog}`
 //     : '';
 
-export { authorize };
+export { authorize, register };
