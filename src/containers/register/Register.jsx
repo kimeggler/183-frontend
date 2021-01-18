@@ -20,6 +20,12 @@ function Register() {
     authorize(email, password);
   };
 
+  const fieldsEmpty = () => {
+    return (
+      firstName === '' || lastName === '' || email === '' || password === ''
+    );
+  };
+
   return (
     <div className={style.register}>
       <h1>SIGN UP</h1>
@@ -67,10 +73,15 @@ function Register() {
           onChange={e => {
             setConfirmPassword(e.target.value);
           }}
-          type='confirm-password'
+          type='password'
         />
       </form>
-      <button onClick={register}>Register</button>
+      <button
+        disabled={password !== confirmPassword || fieldsEmpty()}
+        onClick={register}
+        className={style.register_validation}>
+        Register
+      </button>
       <button
         className={style.login_button}
         onClick={() => history.push('/login')}>

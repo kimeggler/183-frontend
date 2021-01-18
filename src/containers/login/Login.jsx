@@ -17,6 +17,10 @@ function Login() {
     authorize(email, password);
   };
 
+  const fieldsEmpty = () => {
+    return email === '' || password === '';
+  };
+
   return (
     <div className={style.login}>
       <h1>LOG IN</h1>
@@ -43,7 +47,12 @@ function Login() {
           type='password'
         />
       </form>
-      <button onClick={authenticate}>Authenticate</button>
+      <button
+        disabled={fieldsEmpty()}
+        onClick={authenticate}
+        className={style.login_validation}>
+        Authenticate
+      </button>
 
       <button
         className={style.register_button}

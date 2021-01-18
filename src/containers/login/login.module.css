@@ -23,3 +23,8 @@
   color: #fff;
   margin-bottom: 10px;
 }
+
+.login_validation:disabled {
+  cursor: auto;
+  background-color: #04dac355;
+}
