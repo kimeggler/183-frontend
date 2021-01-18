@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { authorize } from '../../services/authservice';
+import { register } from '../../services/authservice';
 import { validateToken } from '../../helpers/authenticationhelper';
 import style from './register.module.css';
 
@@ -16,8 +16,15 @@ function Register() {
     history.push('/');
   }
 
-  const register = () => {
-    authorize(email, password);
+  const registerUser = () => {
+    const payload = {
+      firstname: firstName,
+      lastname: lastName,
+      email: email,
+      password: password,
+    };
+
+    register(payload);
   };
 
   const fieldsEmpty = () => {
@@ -78,7 +85,7 @@ function Register() {
       </form>
       <button
         disabled={password !== confirmPassword || fieldsEmpty()}
-        onClick={register}
+        onClick={registerUser}
         className={style.register_validation}>
         Register
       </button>

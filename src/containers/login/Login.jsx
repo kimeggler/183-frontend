@@ -14,7 +14,12 @@ function Login() {
   }
 
   const authenticate = () => {
-    authorize(email, password);
+    const payload = {
+      email: email,
+      password: password,
+    };
+
+    authorize(payload);
   };
 
   const fieldsEmpty = () => {
