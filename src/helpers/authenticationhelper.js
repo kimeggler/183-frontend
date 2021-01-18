@@ -30,10 +30,10 @@ const clearToken = () => {
   window.localStorage.clear();
 };
 
-const setToken = async () => {
-  if (getTokenFromURL()) {
+const setToken = async token => {
+  if (token) {
     const timeStamp = new Date();
-    window.localStorage.setItem('183_token', getTokenFromURL());
+    window.localStorage.setItem('183_token', token);
     window.localStorage.setItem('183_timestamp', timeStamp.getTime() / 1000);
   }
 };

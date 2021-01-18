@@ -1,4 +1,4 @@
-.login {
+.register {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,13 +6,13 @@
   height: 100vh;
 }
 
-.login_form {
+.register_form {
   display: flex;
   flex-direction: column;
   max-width: 80%;
 }
 
-.register_button {
+.login_button {
   height: 40px;
   width: 200px;
   padding: 5px;

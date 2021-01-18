@@ -1,11 +1,10 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext } from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 
 import './App.css';
 
 import { validateToken } from './helpers/authenticationhelper';
-import { getData } from './services/fetchservice';
 import Login from './containers/login/Login';
 
 export const UserContext = createContext();
