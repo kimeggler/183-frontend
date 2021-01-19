@@ -8,18 +8,40 @@ function Login() {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   if (validateToken()) {
     history.push('/');
   }
 
-  const authenticate = () => {
+  Date.prototype.addHours = function (h) {
+    this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+    return this;
+  }
+
+  const checkAttempts = (email) => {
+    const attempts = Number(document.cookie.split(email + '=')[1]?.charAt(0)) + 1 || 1;
+    if (attempts < 4) {
+      const expireDate = attempts > 3 ? new Date().addHours(1) : '';
+      document.cookie = `${email}=${attempts}; expires=${expireDate}`;
+      return true;
+    }
+
+    return false;
+  }
+
+  const authenticate = async () => {
     const payload = {
       email: email,
       password: password,
     };
 
-    authorize(payload);
+    if (checkAttempts(payload.email)) {
+      await authorize(payload);
+    } else {
+      setError('Too much attempts, come back in 1 hour')
+    }
+
   };
 
   const fieldsEmpty = () => {
@@ -28,7 +50,7 @@ function Login() {
 
   return (
     <div className={style.login}>
-      <h1>LOG IN</h1>
+      <h1>LOGIN</h1>
       <h2>
         Welcome back, <span style={{ color: '#04dac3' }}>User</span>
       </h2>
@@ -52,11 +74,12 @@ function Login() {
           type='password'
         />
       </form>
+      <p className={style.error_message}>{error}</p>
       <button
         disabled={fieldsEmpty()}
         onClick={authenticate}
         className={style.login_validation}>
-        Authenticate
+        Login
       </button>
 
       <button

@@ -16,7 +16,7 @@ function Register() {
     history.push('/');
   }
 
-  const registerUser = () => {
+  const registerUser = async () => {
     const payload = {
       firstname: firstName,
       lastname: lastName,
@@ -24,7 +24,7 @@ function Register() {
       password: password,
     };
 
-    register(payload);
+    await register(payload);
   };
 
   const fieldsEmpty = () => {

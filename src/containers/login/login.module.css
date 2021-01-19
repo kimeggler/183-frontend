@@ -28,3 +28,8 @@
   cursor: auto;
   background-color: #04dac355;
 }
+
+.error_message {
+  margin-top: 0;
+  color: #dd1122;
+}
