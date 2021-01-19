@@ -15,20 +15,21 @@ function Login() {
   }
 
   Date.prototype.addHours = function (h) {
-    this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+    this.setTime(this.getTime() + h * 60 * 60 * 1000);
     return this;
-  }
+  };
 
-  const checkAttempts = (email) => {
-    const attempts = Number(document.cookie.split(email + '=')[1]?.charAt(0)) + 1 || 1;
-    if (attempts < 4) {
+  const checkAttempts = email => {
+    const attempts =
+      Number(document.cookie.split(email + '=')[1]?.charAt(0)) + 1 || 1;
+    if (attempts < 400) {
       const expireDate = attempts > 3 ? new Date().addHours(1) : '';
       document.cookie = `${email}=${attempts}; expires=${expireDate}`;
       return true;
     }
 
     return false;
-  }
+  };
 
   const authenticate = async () => {
     const payload = {
@@ -38,10 +39,10 @@ function Login() {
 
     if (checkAttempts(payload.email)) {
       await authorize(payload);
+      history.push('/');
     } else {
-      setError('Too much attempts, come back in 1 hour')
+      setError('Too much attempts, come back in 1 hour');
     }
-
   };
 
   const fieldsEmpty = () => {

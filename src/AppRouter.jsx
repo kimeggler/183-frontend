@@ -6,6 +6,7 @@ import './App.css';
 
 import { validateToken } from './helpers/authenticationhelper';
 import Login from './containers/login/Login';
+import Home from './containers/home/Home';
 
 export const UserContext = createContext();
 
@@ -31,7 +32,7 @@ const AppRouter = ({ isLoading }) => {
   return (
     // <UserContext.Provider value={{ profile }}>
     <div className='router-section' id='router-element'>
-      <Route exact path='/home' component={null} />
+      <Route exact path='/' component={Home} />
     </div>
     // </UserContext.Provider>
   );

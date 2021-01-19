@@ -24,7 +24,9 @@ function Register() {
       password: password,
     };
 
+    console.log(payload);
     await register(payload);
+    history.push('/');
   };
 
   const fieldsEmpty = () => {

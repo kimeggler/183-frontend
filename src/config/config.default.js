@@ -7,7 +7,7 @@ const config = {
   hostname,
   port,
   origin,
-  authority: 'https://localhost:4000/authorize',
+  authority: 'http://localhost:4000/auth',
 };
 
 export default config;

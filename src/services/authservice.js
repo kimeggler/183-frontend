@@ -7,17 +7,14 @@ const getDefaultHeaders = () => ({
 });
 
 const authorize = async (data, headers = {}) => {
-  // if (!validateToken()) {
-  //   window.location.replace(loginRenewal());
-  // }
   const defaultHeaders = getDefaultHeaders();
-  return fetch(`${config.authority}/login`, {
+  return await fetch(`${config.authority}/login`, {
     method: 'POST',
     headers: {
       ...defaultHeaders,
       ...headers,
     },
-    body: data,
+    body: JSON.stringify(data),
   })
     .then(response => response.json())
     .then(res => setToken(res))
@@ -32,7 +29,7 @@ const register = async (data, headers = {}) => {
       ...defaultHeaders,
       ...headers,
     },
-    body: data,
+    body: JSON.stringify(data),
   })
     .then(response => response.json())
     .then(res => setToken(res))
