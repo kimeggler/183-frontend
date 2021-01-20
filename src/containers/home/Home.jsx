@@ -16,10 +16,12 @@ function Home() {
 
   const setVisibility = () => {
     let isAdmin = false;
-    for (var i = 0; i < profile.user.roles.length; i++) {
-      if (profile.user.roles[i].name === 'admin') {
-        isAdmin = true;
-        break;
+    if (profile.user.roles) {
+      for (var i = 0; i < profile.user.roles.length; i++) {
+        if (profile.user.roles[i].name === 'admin') {
+          isAdmin = true;
+          break;
+        }
       }
     }
     return isAdmin ? 'visible' : 'hidden';
