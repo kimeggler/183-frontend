@@ -22,7 +22,7 @@ function Login() {
   const checkAttempts = email => {
     const attempts =
       Number(document.cookie.split(email + '=')[1]?.charAt(0)) + 1 || 1;
-    if (attempts < 400) {
+    if (attempts < 3000) {
       const expireDate = attempts > 3 ? new Date().addHours(1) : '';
       document.cookie = `${email}=${attempts}; expires=${expireDate}`;
       return true;

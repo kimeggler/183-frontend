@@ -36,3 +36,11 @@ button:hover {
 form {
   margin-top: 20px;
 }
+
+.hidden {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}

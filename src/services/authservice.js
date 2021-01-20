@@ -1,5 +1,13 @@
 import config from '../config';
-import { setToken } from '../helpers/authenticationhelper';
+import {
+  setToken,
+  getToken,
+  validateToken,
+} from '../helpers/authenticationhelper';
+
+const loginRenewal = () => {
+  return `/login`;
+};
 
 const getDefaultHeaders = () => ({
   Accept: 'application/json',
@@ -36,9 +44,25 @@ const register = async (data, headers = {}) => {
     .catch(e => console.log(e));
 };
 
+const getProfile = async (path, headers = {}) => {
+  if (!validateToken()) {
+    window.location.replace(loginRenewal());
+  }
+  const token = getToken();
+  const defaultHeaders = getDefaultHeaders(token);
+  return fetch(`${config.authority}/me`, {
+    method: 'GET',
+    headers: {
+      ...defaultHeaders,
+      ...headers,
+      Authorization: `Bearer ${getToken()}`,
+    },
+  }).then(response => response.json());
+};
+
 // const spotifyParams = params =>
 //   params
 //     ? `?client_id=${params.client_id}&redirect_uri=${params.redirect_uri}&scope=${params.scope}&response_type=token&show_dialog=${params.show_dialog}`
 //     : '';
 
-export { authorize, register };
+export { authorize, register, getProfile };

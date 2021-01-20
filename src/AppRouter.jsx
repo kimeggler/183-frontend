@@ -1,9 +1,10 @@
-import React, { createContext } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 
 import './App.css';
 
+import { getProfile } from './services/authservice';
 import { validateToken } from './helpers/authenticationhelper';
 import Login from './containers/login/Login';
 import Home from './containers/home/Home';
@@ -11,17 +12,16 @@ import Home from './containers/home/Home';
 export const UserContext = createContext();
 
 const AppRouter = ({ isLoading }) => {
-  // const [profile, setProfile] = useState();
+  const [profile, setProfile] = useState();
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     setProfile(await getData('me'));
-  //   };
-  //   fetchUser();
-  // }, []);
+  useEffect(() => {
+    const fetchUser = async () => {
+      setProfile(await getProfile('me'));
+    };
+    fetchUser();
+  }, []);
 
-  if (isLoading) {
-    // || !profile
+  if (isLoading || !profile) {
     return null;
   }
 
@@ -30,11 +30,11 @@ const AppRouter = ({ isLoading }) => {
   }
 
   return (
-    // <UserContext.Provider value={{ profile }}>
-    <div className='router-section' id='router-element'>
-      <Route exact path='/' component={Home} />
-    </div>
-    // </UserContext.Provider>
+    <UserContext.Provider value={{ profile }}>
+      <div className='router-section' id='router-element'>
+        <Route exact path='/' component={Home} />
+      </div>
+    </UserContext.Provider>
   );
 };
 
