@@ -14,16 +14,16 @@ function Login() {
     history.push('/');
   }
 
-  Date.prototype.addHours = function (h) {
-    this.setTime(this.getTime() + h * 60 * 60 * 1000);
+  Date.prototype.addMinute = function (m) {
+    this.setTime((this.getTime() * 60 + m) * 60 * 1000);
     return this;
   };
 
   const checkAttempts = email => {
     const attempts =
       Number(document.cookie.split(email + '=')[1]?.charAt(0)) + 1 || 1;
-    if (attempts < 3000) {
-      const expireDate = attempts > 3 ? new Date().addHours(1) : '';
+    if (attempts < 3) {
+      const expireDate = attempts > 3 ? new Date().addMinute(1) : '';
       document.cookie = `${email}=${attempts}; expires=${expireDate}`;
       return true;
     }
